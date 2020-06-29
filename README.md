@@ -1,16 +1,12 @@
 ## Audio Captioning based on Transformer and Pre-training CNN
 
-### Setting up the code
+### Setting up the Code and Environment
 
-1. Clone this repository.
-2. Use  pip to install dependencies.
+1. Clone this repository: `git clone https://github.com/lukewys/dcase_2020_T6.git`
+2. Install pytorch >=1.4.0
+3. Use  pip to install dependencies: `pip install -r requirements.txt`
 
-```
-$ git clone https://github.com/lukewys/dcase_2020_T6.git
-$ pip install -r requirements_pip.txt
-```
-
-### preparing the data
+### Preparing the Data
 
 - Download the required dataset  of  DCASE2020 Automated Audio Captioning task
 
@@ -30,24 +26,26 @@ $ pip install -r requirements_pip.txt
   
   ```
 
+- Enter the `create_dataset` directory.
+
 - Run `main.py` to create dataset and extract features under current directory. Result folders would be `data_splits`, `data_splits_audio` and `pickles`.
 
 - Then, run `creat_test_set.py` to create test set under current directory. Result folder would be `test_data`.
 
-### pretrain cnn
+### Pretrain CNN
 
 - Enter the `audio_tag` directory, run `generate_tag.py` to generate the tag file `audioTagNum_development_fin.pickle`  and `audioTagNum_ evaluation_fin.pickle`.
 - Back to the project directory, run `Tag_train.py` to train the model. The model is saved in `./models/tag_models`.
 
 
 
-### pretrain embedding
+### Pretrain Word Embedding
 
 - Enter `the word_embedding_pretrain `  directory, run `word2vec.py`
 
 
 
-### run the project
+### Run the Project
 
 You can run the project using the set script:
 
@@ -57,7 +55,14 @@ python run.py
 
   
 
-  
+## TODO
 
+tagging label filtering
 
+upload requirements.txt
 
+how to get the results and score
+
+how to load trained weight and reproduce exact result submitted in challenge
+
+how to get all the scores in ablation test
