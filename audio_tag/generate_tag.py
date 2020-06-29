@@ -36,7 +36,7 @@ def c_wordList(x):
     return WordList
 
 def gen_tag(split):
-    audioAttributes = []  # 所有的attributes
+    audioAttributes = [] 
     allWordList = []
     with open('clotho_captions_{}.csv'.format(split), 'r') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -45,11 +45,11 @@ def gen_tag(split):
         reader = csv.reader(f)
         count = 0
         for row in reader:
-            curAttributes = []  # 当前audio的attributes
-            count += 1  # 忽略第一行
+            curAttributes = []  
+            count += 1  
             if count == 1:
                 continue
-            curCaptionList = row[1:]  # 第一列不是caption
+            curCaptionList = row[1:]  
             curWordList = []
             for caption in curCaptionList:
                 curWordList.extend(get_sentence_words(caption))
