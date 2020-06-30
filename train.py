@@ -207,7 +207,7 @@ if __name__ == '__main__':
                                       load_into_memory=False,
                                       batch_size=hp.batch_size,
                                       nb_t_steps_pad='max',
-                                      num_workers=4, return_reference=True, augment = True)
+                                      num_workers=4, return_reference=True, augment =  hp.spec_augmentation)
 
     evaluation_beam = get_clotho_loader(data_dir=data_dir, split='evaluation',
                                         input_field_name='features',
