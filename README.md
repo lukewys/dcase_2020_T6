@@ -34,7 +34,8 @@
 
 ### Pretrain CNN
 
-- Enter the `audio_tag` directory, run `generate_tag.py` to generate the tag file `audioTagNum_development_fin.pickle`  and `audioTagNum_ evaluation_fin.pickle`.
+- Enter the `audio_tag` directory.
+- First, run`generate_word_list.py` to generate word list `word_list_pretrain_rules.p`, then run `generate_tag.py` to generate the tag label: `audioTagNum_development_fin.pickle`  and `audioTagNum_evaluation_fin.pickle`.
 - Back to the project directory, run `Tag_train.py` to train the model. The model is saved in `./models/tag_models`.
 
 
@@ -56,10 +57,6 @@ python run.py
   
 
 ## TODO
-
-tagging label filtering
-
-upload requirements.txt
 
 how to get the results and score
 
