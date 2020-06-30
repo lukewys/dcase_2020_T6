@@ -63,3 +63,5 @@ how to get the results and score
 how to load trained weight and reproduce exact result submitted in challenge
 
 how to get all the scores in ablation test
+
+how to setup coco caption
