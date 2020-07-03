@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import time
 
-from data_handling import get_clotho_loader,get_test_data_loader
+from data_handling import get_clotho_loader, get_test_data_loader
 from model import TransformerModel  # , RNNModel, RNNModelSmall
 import itertools
 import numpy as np
@@ -11,8 +11,8 @@ import sys
 import logging
 import csv
 
-from util import get_file_list,  get_padding, print_hparams, greedy_decode, \
-    calculate_bleu, calculate_spider, LabelSmoothingLoss,beam_search,align_word_embedding,gen_str
+from util import get_file_list, get_padding, print_hparams, greedy_decode, \
+    calculate_bleu, calculate_spider, LabelSmoothingLoss, beam_search, align_word_embedding, gen_str
 from hparams import hparams
 from torch.utils.tensorboard import SummaryWriter
 
@@ -31,7 +31,7 @@ def train():
     total_loss_text = 0.
     start_time = time.time()
     batch = 0
-    for src, tgt,tgt_len, ref in training_data:
+    for src, tgt, tgt_len, ref in training_data:
         src = src.to(device)
         tgt = tgt.to(device)
         tgt_pad_mask = get_padding(tgt, tgt_len)
@@ -71,7 +71,7 @@ def eval_all(evaluation_data, max_len=30, eos_ind=9, word_dict_pickle_path=None)
     with torch.no_grad():
         output_sentence_all = []
         ref_all = []
-        for src, tgt,_, ref in evaluation_data:
+        for src, tgt, _, ref in evaluation_data:
             src = src.to(device)
             output = greedy_decode(model, src, max_len=max_len)
 
@@ -92,12 +92,13 @@ def eval_all(evaluation_data, max_len=30, eos_ind=9, word_dict_pickle_path=None)
         msg = f'eval_greddy SPIDEr: {loss_mean:2.4f}'
         logging.info(msg)
 
-def eval_with_beam(evaluation_data, max_len=30, eos_ind=9, word_dict_pickle_path=None,beam_size = 3):
+
+def eval_with_beam(evaluation_data, max_len=30, eos_ind=9, word_dict_pickle_path=None, beam_size=3):
     model.eval()
     with torch.no_grad():
         output_sentence_all = []
         ref_all = []
-        for src, tgt,_, ref in evaluation_data:
+        for src, tgt, _, ref in evaluation_data:
             src = src.to(device)
             output = beam_search(model, src, max_len, start_symbol_ind=0, beam_size=beam_size)
 
@@ -118,6 +119,7 @@ def eval_with_beam(evaluation_data, max_len=30, eos_ind=9, word_dict_pickle_path
         msg = f'eval_beam_{beam_size} SPIDEr: {loss_mean:2.4f}'
         logging.info(msg)
 
+
 def test_with_beam(test_data, max_len=30, eos_ind=9, beam_size=3):
     model.eval()
 
@@ -136,9 +138,9 @@ def test_with_beam(test_data, max_len=30, eos_ind=9, beam_size=3):
                         if sym == eos_ind: break
                         output_sentence_ind.append(sym.item())
                     output_sentence_ind_batch.append(output_sentence_ind)
-                out_str  = gen_str(output_sentence_ind_batch,hp.word_dict_pickle_path)
+                out_str = gen_str(output_sentence_ind_batch, hp.word_dict_pickle_path)
                 for caption, fn in zip(out_str, filename):
-                    writer.writerow(['{}.wav'.format(fn),caption])
+                    writer.writerow(['{}.wav'.format(fn), caption])
 
 
 if __name__ == '__main__':
@@ -149,13 +151,14 @@ if __name__ == '__main__':
     parser.add_argument('--training_epochs', type=int, default=hp.training_epochs)
     parser.add_argument('--lr', type=float, default=hp.lr)
     parser.add_argument('--scheduler_decay', type=float, default=hp.scheduler_decay)
-    parser.add_argument('--load_pretrain_cnn',action='store_true')
+    parser.add_argument('--load_pretrain_cnn', action='store_true')
+    parser.add_argument('--freeze_cnn', action='store_true')
     parser.add_argument('--load_pretrain_emb', action='store_true')
     parser.add_argument('--load_pretrain_model', action='store_true')
-    parser.add_argument('--spec_augmentation',action='store_true')
+    parser.add_argument('--spec_augmentation', action='store_true')
     parser.add_argument('--label_smoothing', action='store_true')
     parser.add_argument('--name', type=str, default=hp.name)
-    parser.add_argument('--pretrain_emb_path',type=str, default=hp.pretrain_emb_path)
+    parser.add_argument('--pretrain_emb_path', type=str, default=hp.pretrain_emb_path)
     parser.add_argument('--pretrain_cnn_path', type=str, default=hp.pretrain_cnn_path)
     parser.add_argument('--pretrain_model_path', type=str, default=hp.pretrain_model_path)
     args = parser.parse_args()
@@ -168,7 +171,7 @@ if __name__ == '__main__':
     pretrain_cnn = torch.load(hp.pretrain_cnn_path) if hp.load_pretrain_cnn else None
 
     model = TransformerModel(hp.ntoken, hp.ninp, hp.nhead, hp.nhid, hp.nlayers, hp.batch_size, dropout=0.2,
-                            pretrain_cnn=pretrain_cnn,pretrain_emb=pretrain_emb).to(device)
+                             pretrain_cnn=pretrain_cnn, pretrain_emb=pretrain_emb, freeze_cnn=hp.freeze_cnn).to(device)
     if hp.load_pretrain_model:
         model.load_state_dict(torch.load(hp.pretrain_model_path))
 
@@ -180,7 +183,7 @@ if __name__ == '__main__':
         criterion = nn.CrossEntropyLoss(ignore_index=hp.ntoken - 1)
 
     now_time = str(time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(time.time())))
-    log_dir = 'models/{name}'.format(name = hp.name)
+    log_dir = 'models/{name}'.format(name=hp.name)
 
     writer = SummaryWriter(log_dir=log_dir)
 
@@ -207,7 +210,7 @@ if __name__ == '__main__':
                                       load_into_memory=False,
                                       batch_size=hp.batch_size,
                                       nb_t_steps_pad='max',
-                                      num_workers=4, return_reference=True, augment =  hp.spec_augmentation)
+                                      num_workers=4, return_reference=True, augment=hp.spec_augmentation)
 
     evaluation_beam = get_clotho_loader(data_dir=data_dir, split='evaluation',
                                         input_field_name='features',
@@ -229,7 +232,7 @@ if __name__ == '__main__':
     logging.info(str(print_hparams(hp)))
 
     logging.info('Data loaded!')
-    logging.info('Data size: ' + str(len(evaluation_beam )))
+    logging.info('Data size: ' + str(len(evaluation_beam)))
 
     logging.info('Total Model parameters: ' + str(sum(p.numel() for p in model.parameters() if p.requires_grad)))
     epoch = 1
@@ -249,7 +252,7 @@ if __name__ == '__main__':
             epoch += 1
 
     if hp.mode == 'eval':
-        #Evaluation model score
+        # Evaluation model score
         model.load_state_dict(torch.load("./models/best.pt"))
         eval_all(evaluation_beam, word_dict_pickle_path=word_dict_pickle_path)
         eval_with_beam(evaluation_beam, max_len=30, eos_ind=9, word_dict_pickle_path=word_dict_pickle_path,
@@ -260,6 +263,6 @@ if __name__ == '__main__':
                        beam_size=4)
 
     elif hp.mode == 'test':
-        #Generate caption(in test_out.csv)
+        # Generate caption(in test_out.csv)
         model.load_state_dict(torch.load("./models/best.pt"))
         test_with_beam(test_data, beam_size=3)

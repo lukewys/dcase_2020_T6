@@ -30,7 +30,7 @@ class PositionalEncoding(nn.Module):
 class TransformerModel(nn.Module):
 
     def __init__(self, ntoken, ninp, nhead, nhid, nlayers, batch_size, dropout=0.5,pretrain_cnn=None,
-                 pretrain_emb=None):
+                 pretrain_emb=None,freeze_cnn=True):
         super(TransformerModel, self).__init__()
 
         self.model_type = 'cnn+transformer'
@@ -58,6 +58,7 @@ class TransformerModel(nn.Module):
             for i in range(len(new_list)):
                 dict_new[new_list[i]] = dict_trained[trained_list[i]]
             self.encoder.load_state_dict(dict_new)
+        if freeze_cnn:
             self.freeze_cnn()
 
         if pretrain_emb is not None:
