@@ -48,13 +48,32 @@
 
 ### Run the Project
 
-You can run the project using the set script:
+- The file hparams.py holds the default arguments for our project. You can modify these parameters according to your own needs. 
+
+- You can use our pretrained models in `models/best.pt`  to  reproduce our results.
+
+#### train
+
+Set `mode=train` in hparams.py. Then you can run the project using the set script:
 
 ```python
+#You can modify the running script as needed
 python run.py
 ```
 
-  
+The trained models and logs will be saved in `models/{hparams.name}`.
+
+#### eval
+
+set `mode=eval` in hparams.py. Then choose the model you want to evaluate,run
+
+`python train.py`. The system will score the model based on the evaluation dataset.
+
+#### test
+
+set `mode=test` in hparams.py. Then choose the model you want to test,run `python train.py`. The system will generate the corresponding captions according to the test dataset.
+
+
 
 ## TODO
 
