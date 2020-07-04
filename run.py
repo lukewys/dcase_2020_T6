@@ -7,7 +7,7 @@ tag_model_path = r'models/TagModel_60.pt'
 # caption_model_path ='models/18.pt'
 
 
-base
+#base
 lr = 3e-4
 training_epochs = 30
 name = 'base'
