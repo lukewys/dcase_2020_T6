@@ -156,7 +156,8 @@ class ClothoDatasetEval(Dataset):
 
 def get_all_ref(filename, data_dir):
     filename = str(filename)
-    tgt = [np.load(d, allow_pickle=True).words_ind.tolist()
+    # tgt = [np.load(d, allow_pickle=True).words_ind.tolist()
+    tgt = [np.load(d, allow_pickle=True)['words_ind'].item().tolist()
            for d in [os.path.join(data_dir, 'clotho_file_{filename}.wav_{i}.npy'.
                                   format(filename=filename[:-4],  # 删除'.wav'
                                          i=i)) for i in range(5)]  # wav_0-wav_4
