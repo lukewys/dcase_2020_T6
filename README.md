@@ -32,6 +32,10 @@
 
 - Then, run `creat_test_set.py` to create test set under current directory. Result folder would be `test_data`.
 
+### Setup COCO caption
+
+Please setup coco caption and download the file needed according to https://github.com/audio-captioning/caption-evaluation-tools. (~300MB of files will be downloaded)
+
 ### Pretrain CNN
 
 - Enter the `audio_tag` directory.
@@ -82,5 +86,3 @@ how to get the results and score
 how to load trained weight and reproduce exact result submitted in challenge
 
 how to get all the scores in ablation test
-
-how to setup coco caption
