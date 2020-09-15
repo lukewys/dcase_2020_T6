@@ -18,7 +18,7 @@ from tools import file_io, printing
 from tools.argument_parsing import get_argument_parser
 from tools.model import module_epoch_passing, get_model,\
     get_device
-from data_handlers.clotho_loader import get_clotho_loader
+from data_handling.clotho_data_loader import get_clotho_loader
 from eval_metrics import evaluate_metrics
 
 

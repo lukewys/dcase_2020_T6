@@ -38,11 +38,11 @@ def main():
     if settings['workflow']['dataset_creation']:
         logger_main.info('Starting creation of dataset')
 
-        # logger_inner.info('Creating examples')
-        # dataset_multiprocess.create_dataset(
-        #     settings_dataset=settings['dataset_creation_settings'],
-        #     settings_dirs_and_files=settings['dirs_and_files'])
-        # logger_inner.info('Examples created')
+        logger_inner.info('Creating examples')
+        dataset_multiprocess.create_dataset(
+            settings_dataset=settings['dataset_creation_settings'],
+            settings_dirs_and_files=settings['dirs_and_files'])
+        logger_inner.info('Examples created')
 
         logger_inner.info('Extracting features')
         dataset_multiprocess.extract_features(
