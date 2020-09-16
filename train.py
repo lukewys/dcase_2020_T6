@@ -232,7 +232,7 @@ if __name__ == '__main__':
     logging.info(str(print_hparams(hp)))
 
     logging.info('Data loaded!')
-    logging.info('Data size: ' + str(len(evaluation_beam)))
+    logging.info('Data size: ' + str(len(training_data)))
 
     logging.info('Total Model parameters: ' + str(sum(p.numel() for p in model.parameters() if p.requires_grad)))
     epoch = 1
