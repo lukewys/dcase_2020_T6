@@ -38,7 +38,7 @@ os.system(f'python train.py  --training_epochs {training_epochs}  --lr {lr} '
           f'--load_pretrain_cnn --freeze_cnn')
 
 #fine-tune
- lr = 1e-4
+lr = 1e-4
 training_epochs = 30
 scheduler_decay = 0.98
 caption_model_path ='models/augmentation+smoothing+pretrain_cnn+freeze_cnn/20.pt'
