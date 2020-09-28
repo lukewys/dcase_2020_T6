@@ -8,7 +8,7 @@
 
 ### Preparing the Data
 
-- Download the required dataset  of  DCASE2020 Automated Audio Captioning task
+- [Download](http://dcase.community/challenge2020/task-automatic-audio-captioning#download) the required dataset of DCASE2020 Automated Audio Captioning task
 
 - Enter the `create_dataset` directory，Put Clotho data set into `data` folder structured like this:
 
@@ -80,6 +80,23 @@ set `mode=eval` in hparams.py. Then choose the model you want to evaluate,run
 #### test
 
 set `mode=test` in hparams.py. Then choose the model you want to test,run `python train.py`. The system will generate the corresponding captions according to the test dataset.
+
+
+
+### Cite
+
+If you use our code, pleas kindly cite following:
+
+```
+@techreport{wuyusong2020_t6,
+    Author = "Wu, Yusong and Chen, Kun and Wang, Ziyue and Zhang, Xuan and Nian, Fudong and Li, Shengchen and Shao, Xi",
+    title = "Audio Captioning Based on Transformer and Pre-Training for 2020 {DCASE} Audio Captioning Challenge",
+    institution = "DCASE2020 Challenge",
+    year = "2020",
+    month = "June",
+    abstract = "This report proposes an automated audio captioning model for the 2020 DCASE audio captioning challenge. In this challenge, a model is required to be trained from scratch to generate natural language descriptions of a given audio signal. However, as limited data available and restrictions on using pre-trained models trained by external data, training directly from scratch can result in poor performance where acoustic events and language are poorly modeled. For better acoustic event and language modeling, a sequence-to-sequence model is proposed which consists of a CNN encoder and a Transformer decoder. In the proposed model, the encoder and word embedding are firstly pre-trained. Regulations and data augmentations are applied during training, while fine-tuning is applied after training. Experiments show that the proposed model can achieve a SPIDEr score of 0.227 on audio captioning performance."
+}
+```
 
 
 

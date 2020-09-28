@@ -1,3 +1,5 @@
+[Download](http://dcase.community/challenge2020/task-automatic-audio-captioning#download) the required dataset of DCASE2020 Automated Audio Captioning task.
+
 Put Clotho data set into `data` folder structured like this:
 
 ```
