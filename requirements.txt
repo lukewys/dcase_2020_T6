@@ -6,7 +6,7 @@ audiomentations==0.9.0
 loguru==0.3.2
 torchlibrosa==0.0.4
 SoundFile==0.10.3.post1
-numpy==1.18.2
+numpy==1.22.0
 matplotlib==3.2.1
 scikit_image==0.16.2
 librosa==0.7.1
