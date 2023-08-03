@@ -3,7 +3,7 @@ gensim==3.8.1
 pandas==1.0.3
 tqdm==4.43.0
 audiomentations==0.9.0
-loguru==0.3.2
+loguru==0.5.3
 torchlibrosa==0.0.4
 SoundFile==0.10.3.post1
 numpy==1.18.2
